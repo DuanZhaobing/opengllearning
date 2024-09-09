@@ -7,20 +7,24 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 find_package(OpenGL REQUIRED)
 
+# Set OpenGL directory
+set(OPENGL_DIR "${CMAKE_SOURCE_DIR}/external/opengl")
+
 # Set GLFW directory
-set(GLFW_DIR "${CMAKE_SOURCE_DIR}/external/opengl/glfw")
+set(GLFW_DIR "${OPENGL_DIR}/glfw")
 set(GLFW_INCLUDE_DIR "${GLFW_DIR}/include")
 set(GLFW_LIB_DIR "${GLFW_DIR}/lib")
 set(GLFW_LIB "glfw3")
 
 # Set GLAD directory
-set(GLAD_DIR "${CMAKE_SOURCE_DIR}/external/opengl/glad")
+set(GLAD_DIR "${OPENGL_DIR}/glad")
 set(GLAD_INCLUDE_DIR "${GLAD_DIR}/include")
 set(GLAD_SRC "${GLAD_DIR}/src/glad.c")
 
 # Add source file
 set(SOURCES main.cpp 
-            "${GLAD_SRC}") 
+            "${GLAD_SRC}"
+            ) 
 
 # Add executable
 add_executable(Tutorial "${SOURCES}") 
@@ -29,5 +33,5 @@ add_executable(Tutorial "${SOURCES}")
 target_link_libraries(Tutorial "${GLFW_LIB_DIR}/glfw3.lib" "${OPENGL_LIBRARIES}") 
 
 # Add include directory
-target_include_directories(Tutorial PUBLIC "${GLFW_INCLUDE_DIR}" "${GLAD_INCLUDE_DIR}") 
+target_include_directories(Tutorial PUBLIC  "${OPENGL_DIR}" "${GLFW_INCLUDE_DIR}" "${GLAD_INCLUDE_DIR}") 
 
