@@ -87,6 +87,11 @@ int main() {
 
         // render the triangle
         ourShader.use();
+
+        // Set Offset
+        float xOffset = 0.5f;
+        ourShader.setFloat("xOffset", xOffset);
+
         glBindVertexArray(VAO);
         glDrawArrays(GL_TRIANGLES, 0, 3);
         // glBindVertexArray(0); // no need to unbind it every time
