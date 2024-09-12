@@ -10,6 +10,9 @@ find_package(OpenGL REQUIRED)
 # Set OpenGL directory
 set(OPENGL_DIR "${CMAKE_SOURCE_DIR}/external/opengl")
 
+# Set STB directory
+set(STB_DIR "${CMAKE_SOURCE_DIR}/external/stb")
+
 # Set GLFW directory
 set(GLFW_DIR "${OPENGL_DIR}/glfw")
 set(GLFW_INCLUDE_DIR "${GLFW_DIR}/include")
@@ -21,17 +24,23 @@ set(GLAD_DIR "${OPENGL_DIR}/glad")
 set(GLAD_INCLUDE_DIR "${GLAD_DIR}/include")
 set(GLAD_SRC "${GLAD_DIR}/src/glad.c")
 
+# Add resource files
+file(GLOB JPG_FILES "${CMAKE_SOURCE_DIR}/resource/*.jpg")
+
+foreach(JPG_FILE ${GPG_FILES})
+  set(JPG_SOURCES ${GPG_SOURCES} ${GPG_FILE})
+endforeach()
+
 # Add source file
-set(SOURCES main.cpp 
-            "${GLAD_SRC}"
-            ) 
+set(SOURCES main.cpp "${GLAD_SRC}")
 
 # Add executable
-add_executable(Tutorial "${SOURCES}") 
+add_executable(Tutorial "${SOURCES}")
 
 # Add library
-target_link_libraries(Tutorial "${GLFW_LIB_DIR}/glfw3.lib" "${OPENGL_LIBRARIES}") 
+target_link_libraries(Tutorial "${GLFW_LIB_DIR}/glfw3.lib")
 
 # Add include directory
-target_include_directories(Tutorial PUBLIC  "${OPENGL_DIR}" "${GLFW_INCLUDE_DIR}" "${GLAD_INCLUDE_DIR}") 
-
+target_include_directories(
+  Tutorial PUBLIC "${OPENGL_DIR}" "${STB_DIR}" "${GLFW_INCLUDE_DIR}"
+                  "${GLAD_INCLUDE_DIR}" "${GPG_SOURCES}")
