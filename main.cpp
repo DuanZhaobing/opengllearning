@@ -1,7 +1,10 @@
 #include "glad/glad.h"
 #include "glfw3.h"
-
 #include "shader/shader_s.h"
+
+#include "glm/glm.hpp"
+#include "glm/gtc/matrix_transform.hpp"
+#include "glm/gtc/type_ptr.hpp"
 
 #include <iostream>
 
@@ -42,6 +45,7 @@ int main() {
         std::cout << "Failed to initialize GLAD" << std::endl;
         return -1;
     }
+
     // build and compile our shader program
     // ------------------------------------
     Shader ourShader("../external/opengl/shader/shader.vs", "../external/opengl/shader/shader.fs");
@@ -173,10 +177,17 @@ int main() {
         glActiveTexture(GL_TEXTURE1);
         glBindTexture(GL_TEXTURE_2D, texture2);
 
+        // create transformations
+        glm::mat4 trans          = glm::mat4(1.0f);
+        trans                    = glm::translate(trans, glm::vec3(0.5f, -0.5f, 0.0f));
+        trans                    = glm::rotate(trans, ( float )glfwGetTime(), glm::vec3(0.0f, 0.0f, 1.0f));
+        unsigned int transforLoc = glGetUniformLocation(ourShader.ID, "transform");
+
         // render the container
         ourShader.use();
         glBindVertexArray(VAO);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+        glUniformMatrix4fv(transforLoc, 1, GL_FALSE, glm::value_ptr(trans));
 
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------

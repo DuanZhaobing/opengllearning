@@ -24,11 +24,14 @@ set(GLAD_DIR "${OPENGL_DIR}/glad")
 set(GLAD_INCLUDE_DIR "${GLAD_DIR}/include")
 set(GLAD_SRC "${GLAD_DIR}/src/glad.c")
 
+# Set GLM directory
+set(GLM_DIR "${OPENGL_DIR}/glm")
+
 # Add resource files
 file(GLOB JPG_FILES "${CMAKE_SOURCE_DIR}/resource/*.jpg")
 
-foreach(JPG_FILE ${GPG_FILES})
-  set(JPG_SOURCES ${GPG_SOURCES} ${GPG_FILE})
+foreach(JPG_FILE ${JPG_FILES})
+  set(JPG_SOURCES ${JPG_SOURCES} ${JPG_FILE})
 endforeach()
 
 # Add source file
@@ -42,5 +45,5 @@ target_link_libraries(Tutorial "${GLFW_LIB_DIR}/glfw3.lib")
 
 # Add include directory
 target_include_directories(
-  Tutorial PUBLIC "${OPENGL_DIR}" "${STB_DIR}" "${GLFW_INCLUDE_DIR}"
+  Tutorial PUBLIC "${OPENGL_DIR}" "${STB_DIR}"  "${GLM_DIR}" "${GLFW_INCLUDE_DIR}"
                   "${GLAD_INCLUDE_DIR}" "${GPG_SOURCES}")
