@@ -50,10 +50,10 @@ int main() {
     // ------------------------------------------------------------------
     float vertices[] = {
         // location         // clolr          // texture coordinates
-        0.5f,  0.5f,  0.0f, 1.0f, 0.0f, 0.0f, 2.0f, 2.0f,  // top right
-        0.5f,  -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 2.0f, 0.0f,  // bootom right
-        -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,  // bottom left
-        -0.5f, 0.5f,  0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 2.0f   // top left
+        0.5f,  0.5f,  0.0f, 1.0f, 0.0f, 0.0f, 0.55f, 0.55f,  // top right
+        0.5f,  -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 0.55f, 0.45f,  // bootom right
+        -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 0.45f, 0.45f,  // bottom left
+        -0.5f, 0.5f,  0.0f, 1.0f, 1.0f, 0.0f, 0.45f, 0.55f   // top left
     };
 
     unsigned int indices[] = {
@@ -105,8 +105,8 @@ int main() {
 
     // set texture filtering parameters, Use GL_LINEAR_MIPMAP_LINEAR filtering when textures are minify,
     // GL_LINEAR is used when the texture is being magnified.
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     // load image, create texture and generate mipmaps
     int width, height, nrChannels;
     // Because OpenGL requires that the y-0.0 coordinate be at the bottom of the image, but the y-0.0 coordinate of the
@@ -129,16 +129,12 @@ int main() {
     glGenTextures(1, &texture2);
     // all upcoming GL_TEXTURE_2D operations now have effect on this texture object.
     glBindTexture(GL_TEXTURE_2D, texture2);
-    // set the texture wrapping parameters to GL_REPEAT (default wrapping method)
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
-    // If we select the GL CLAMP TO BORDER option, we also need to specify a color for the edge.
-    float borderColor[] = { 1.0f, 1.0f, 0.0f, 1.0f };
-    glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor);
-    // set texture filtering parameters, Use GL_LINEAR_MIPMAP_LINEAR filtering when textures are minify,
-    // GL_LINEAR is used when the texture is being magnified.
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    // set the texture wrapping parameters
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    // set texture filtering to nearest neighbor to clearly see the texels/pixels
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     // load image, create texture and generate mipmaps
     data = stbi_load("../resources/texture/awesomeface.png", &width, &height, &nrChannels, 0);
     if (data) {
