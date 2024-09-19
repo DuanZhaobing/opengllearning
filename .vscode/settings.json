@@ -1,5 +1,8 @@
 {
-    "files.associations": {
-        "ostream": "cpp"
-    }
+  "files.associations": {
+    "*.json": "jsonc",
+    "ostream": "cpp",
+    "xstring": "cpp"
+  },
+  "CodeGPT.apiKey": "CodeGPT Plus Beta"
 }
