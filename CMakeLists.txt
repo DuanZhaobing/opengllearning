@@ -13,6 +13,9 @@ set(OPENGL_DIR "${CMAKE_SOURCE_DIR}/external/opengl")
 # Set STB directory
 set(STB_DIR "${CMAKE_SOURCE_DIR}/external/stb")
 
+# Set CAMERA directory
+set(CAMERA_DIR "${OPENGL_DIR}/camera")
+
 # Set GLFW directory
 set(GLFW_DIR "${OPENGL_DIR}/glfw")
 set(GLFW_INCLUDE_DIR "${GLFW_DIR}/include")
@@ -45,5 +48,5 @@ target_link_libraries(Tutorial "${GLFW_LIB_DIR}/glfw3.lib")
 
 # Add include directory
 target_include_directories(
-  Tutorial PUBLIC "${OPENGL_DIR}" "${STB_DIR}"  "${GLM_DIR}" "${GLFW_INCLUDE_DIR}"
+  Tutorial PUBLIC "${OPENGL_DIR}" "${STB_DIR}" "${CAMERA_DIR}" "${GLM_DIR}" "${GLFW_INCLUDE_DIR}"
                   "${GLAD_INCLUDE_DIR}" "${GPG_SOURCES}")
